@@ -15,14 +15,14 @@ Left to right, one window with no title bar (`titlebar: "none"`) and no lines be
   - The footer block is empty.
 - **Work area**, background `chrome`.
   - Tab strip, 34px: tabs as 29px-high pills at 13px with a 12px radius; the active one has a border and the `raised` color, inactive ones are transparent. A "+" button, then Files and Changes buttons (13px, transparent when off) that toggle a hidden side panel. Window buttons at the right on Windows.
-  - Pane area: 3px top/bottom and 8px left/right padding, 8px gap between panes. Each pane is a card with radius 16, fill `background` (off-white `#fdfaf4` in light mode), and a 30px header at the top.
+  - Pane area: sand (`canvas`) background, 3px top/bottom and 8px left/right padding, 8px gap between panes. Each pane is a card with radius 16, fill `background` (off-white `#fdfaf4` in light mode), and a 30px header at the top.
 - **Pane header**: program icon, program name or terminal title (13px), the folder (dim), the agent status, then the terminal address at the far right. The address is pink `#ff4fa3` on the focused pane and dim otherwise. On hover, split right, split down, zoom and close buttons appear to its right.
 - **Theme**: light uses the bundled `cozy-paper` (`themes/cozy-paper.json`): `chrome` `#f0e7d6`, `canvas` `#e5d9c4`, terminal background `#fdfaf4`, text `#4a4036`. Dark uses the shipped `graphite`.
 
 ## How it behaves
 
 - **Agent status**: working shows a spinning 12px icon in the pane header, in the tab pill and in the space's tab row. Blocked shows a "Needs you" badge (13px semibold) in the pane header and a 6px dot on the tab. Done shows a 7px dot in the pane header and a 6px dot on tabs. Idle shows nothing.
-- **Focus**: the focused pane has a 3px pink ring. Every pane also has a 3px transparent border, so panes do not shift when focus moves.
+- **Focus**: the focused pane has a 3px pink ring. Every pane also has a 3px faint dark border (`#00000018`), a soft edge against the sand gaps, so panes do not shift when focus moves.
 - **Tab names**: a tab nobody named shows the agent's name, else its folder name, else the program name, else "Terminal". Display only; the tab stays unnamed.
 - **Space tree**: clicking a tab row selects its space, then the tab. When the active tab of the active space is the first tab, the space row and the tab row share one `selected` color and squared touching corners, so they read as one block.
 - **Header buttons**: Settings runs `app.settings`, the command icon runs `app.palette` (clicking again closes it), the toggle collapses the sidebar to a rail.
@@ -35,8 +35,8 @@ Layout `layouts/seamless.json`, a copy of the shipped `main` layout with changes
 
 - Root: `type: "row"`, `titlebar: "none"`, `background: "canvas"`, `terminal_padding: [14, 12]`, `terminal_opacity: 0` (the card's own rounded fill shows through, so the terminal's square fill does not poke past the corners), `theme: { light: "cozy-paper", dark: "graphite" }`. No dividers anywhere.
 - `sidebar`: column, 268px, `background: "chrome"`, children `brand` (46px, mod `seamless-chrome`), `sidebar-lists` (`spaces` with mod `seamless-spaces`, `agents` with mod `seamless-agents`, weight 1 each, min 90), `sidebar-footer` (69px, mod `seamless-chrome` with `props: { footer: true }`).
-- `work`: column, `background: "chrome"`, children `tabs` (34px, mod `seamless-tabs`) and `work-body` (row, padding `[3, 8]`, gap 8). No status bar.
-- `main` block: `content: { tab: "active", pane: { gap: 8, radius: 16, background: "background", lone: true, border: { width: 3, color: "#00000000" }, focus: { width: 3, color: "#ff4fa3" }, header: { content: { mod: "seamless-pane" }, height: 30, position: "top", reveal: "always" } } }`.
+- `work`: column, `background: "chrome"`, children `tabs` (34px, mod `seamless-tabs`) and `work-body` (row, `background: "canvas"`, padding `[3, 8]`, gap 8). No status bar.
+- `main` block: `content: { tab: "active", pane: { gap: 8, radius: 16, background: "background", lone: true, border: { width: 3, color: "#00000018" }, focus: { width: 3, color: "#ff4fa3" }, header: { content: { mod: "seamless-pane" }, height: 30, position: "top", reveal: "always" } } }`.
 - `panel` (hidden, 338px, min 280, max 900) with a `panel-body` stack of `files` and `changes`, which use the shipped `files` and `changes` mods.
 
 The mods are clones of shipped mods (`herdr-app do mod.clone '{"name":"X","as":"seamless-X"}'`), each edited in its `main.js`:
@@ -56,7 +56,7 @@ Theme file `themes/cozy-paper.json`: `background #fdfaf4`, `foreground #4a4036`,
 - Do not write the layout or theme with a byte-order mark. Herdr silently rejects a layout that has one. Write with a tool that does not add a BOM.
 - `terminal_opacity: 0` is what removes the square terminal fill in the pane corners. Without it the bottom corners of the cards look cut.
 - `colors` overrides in a layout apply to both light and dark. That is why the light colors live in a theme file, paired with `graphite` for dark.
-- The 3px transparent `border` is deliberate; take it out and the panes jump when focus moves.
+- The 3px `border` is deliberate; take it out and the panes jump when focus moves. Its faint dark color is the only edge depth: there is no per-card shadow, because a `shadow` on the pane frame does nothing and a `shadow` on the `main` block wraps the whole pane group, darkening the gaps.
 - The pink `#ff4fa3` is hard-coded in the layout and in `seamless-pane`, not a theme color.
 - Per-appearance values cannot go in a layout; the dark theme is the shipped `graphite`, nothing here adjusts it.
 - The collapsed sidebar rail hides the header buttons, so Settings is only reachable from the expanded header.
