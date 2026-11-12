@@ -426,6 +426,7 @@ export default class Spaces extends View {
         .when(on && i === 0, (el) => el.rounded_tl(0).rounded_tr(0))
         .text_size(13)
         .when(on, (el) => el.bg(t.selected))
+        .cursor_pointer()
         .hover((s) => s.bg(t.hover))
         .on_click(() => {
           if (!w.active) run("space.select", { id: w.id });
@@ -456,6 +457,7 @@ export default class Spaces extends View {
       .rounded(8)
       .when(on && w.tabs?.[0]?.active, (el) => el.rounded_bl(0).rounded_br(0))
       .when(on, (el) => el.bg(t.selected))
+      .cursor_pointer()
       .when(!on, (el) => el.hover((s) => s.bg(t.hover)))
       .when(this.pressed === w.id && this.over !== w.id, (el) => el.opacity(0.5))
       .when(this.pressed !== null && this.over === w.id && this.pressed !== w.id, (el) => el.child(
@@ -508,6 +510,7 @@ export default class Spaces extends View {
       .justify_center()
       .items_center()
       .when(w.active, (el) => el.bg(t.selected))
+      .cursor_pointer()
       .when(!w.active, (el) => el.hover((s) => s.bg(t.hover)))
       .on_click(() => run("space.select", { id: w.id }))
       .child(div().text_color(w.active ? t.foreground : t.muted).child(String(i + 1)))
@@ -533,7 +536,7 @@ export default class Spaces extends View {
       .child(h_flex().h(31).pl(16).pr(10).items_center().justify_between().text_size(13).text_color(t.dim)
         .when(collapsed, el => el.pl(0).pr(0).justify_center())
         .when(!collapsed, el => el.child("Spaces"))
-        .child(div().id("space-new").size(26).flex_none().flex().items_center().justify_center().rounded(6).hover(s => s.bg(t.hover).text_color(t.foreground))
+        .child(div().id("space-new").size(26).flex_none().flex().items_center().justify_center().rounded(6).cursor_pointer().hover(s => s.bg(t.hover).text_color(t.foreground))
           .on_click(() => run("space.new")).child(svg("mods/workspace-chrome/plus.svg").size(14))))
       .child(v_flex().flex_1().min_h(0).px(collapsed ? 0 : 8).pb(14).overflow_y_scrollbar().mode("always")
         .on_mouse_up("left", (_e, cx) => { this.pressed = null; cx.notify(); })

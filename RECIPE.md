@@ -9,15 +9,15 @@ A borderless, cozy layout. No title bar, no divider lines, no status bar: a crea
 Left to right, one window with no title bar (`titlebar: "none"`) and no lines between regions.
 
 - **Sidebar, 268px wide**, background `chrome` (cream `#f0e7d6` in light mode). Not resizable.
-  - Header, 46px: the Herdr logo (20px, radius 5) and "Herdr" in semibold, then three 29px icon buttons on the right: Settings (gear), Command palette (the Lucide "command" glyph, stroke 1.5), Sidebar toggle.
+  - Header, 46px: the Herdr logo (20px, radius 5) and "Herdr" in semibold, then three 29px icon buttons on the right: Settings (gear), Command palette (the Lucide "command" glyph, stroke 1.5), Sidebar toggle, all with a hand cursor and a hover fill.
   - "Spaces" list: heading "Spaces" at 13px with a "+" button. Each space is a row (avatar, name, git ahead/behind). Under each space, its tabs as a tree with elbow connectors, 26px rows at 13px, the terminal address and "+N" at the right in 11px dim text.
-  - "Agents" list below it, heading "Agents" at 13px, no top divider.
+  - "Agents" list below it, heading "Agents" at 13px, no top divider, and a 26px sort button at the right of the heading (radius 6, hover fill, hand cursor).
   - The footer block is empty.
 - **Work area**, background `chrome`.
-  - Tab strip, 34px: tabs as 29px-high pills at 13px; the active one has a border and the `raised` color, inactive ones are transparent. A "+" button, then Files and Changes buttons (13px, transparent when off) that toggle a hidden side panel. Window buttons at the right on Windows.
-  - Pane area: 3px top/bottom and 8px left/right padding, 8px gap between panes. Each pane is a card with radius 16, fill `background` (white `#ffffff` in light mode), and a 30px header at the top.
+  - Tab strip, 34px: tabs as 29px-high pills at 13px with a 12px radius; the active one has a border and the `raised` color, inactive ones are transparent. A "+" button, then Files and Changes buttons (13px, transparent when off) that toggle a hidden side panel. Window buttons at the right on Windows.
+  - Pane area: 3px top/bottom and 8px left/right padding, 8px gap between panes. Each pane is a card with radius 16, fill `background` (off-white `#fdfaf4` in light mode), and a 30px header at the top.
 - **Pane header**: program icon, program name or terminal title (13px), the folder (dim), the agent status, then the terminal address at the far right. The address is pink `#ff4fa3` on the focused pane and dim otherwise. On hover, split right, split down, zoom and close buttons appear to its right.
-- **Theme**: light uses the bundled `cozy-paper` (`themes/cozy-paper.json`): `chrome` `#f0e7d6`, `canvas` `#e5d9c4`, terminal background `#ffffff`, text `#4a4036`. Dark uses the shipped `graphite`.
+- **Theme**: light uses the bundled `cozy-paper` (`themes/cozy-paper.json`): `chrome` `#f0e7d6`, `canvas` `#e5d9c4`, terminal background `#fdfaf4`, text `#4a4036`. Dark uses the shipped `graphite`.
 
 ## How it behaves
 
@@ -41,13 +41,13 @@ Layout `layouts/seamless.json`, a copy of the shipped `main` layout with changes
 
 The mods are clones of shipped mods (`herdr-app do mod.clone '{"name":"X","as":"seamless-X"}'`), each edited in its `main.js`:
 
-- `seamless-tabs` (from `tabs`): bottom border removed, `.pt(5)`, pill text 13px and height 29, inactive pills and panel buttons transparent (`#00000000`), Files and Changes buttons 13px, unnamed tabs get an automatic name.
-- `seamless-spaces` (from `spaces`): "Spaces" heading 13px, no chrome background, a tab subtree under each space (`tabRows`, elbow connectors drawn with `border_l` and `border_b`), the terminal address and "+N" via `addrs`, and the shared active color on the first active tab.
-- `seamless-agents` (from `agents`): heading 13px, no chrome background, no top divider.
-- `seamless-chrome` (from `workspace-chrome`): header buttons 29px, Settings added before the palette button, the footer renders nothing, backgrounds and footer border removed. Adds `command.svg`.
+- `seamless-tabs` (from `tabs`): bottom border removed, `.pt(5)`, pill text 13px, height 29 and radius 12, inactive pills and panel buttons transparent (`#00000000`), Files and Changes buttons 13px, unnamed tabs get an automatic name.
+- `seamless-spaces` (from `spaces`): "Spaces" heading 13px, no chrome background, a tab subtree under each space (`tabRows`, elbow connectors drawn with `border_l` and `border_b`), the terminal address and "+N" via `addrs`, and the shared active color on the first active tab. Space rows, tab rows, rail cells and the "+" have `cursor_pointer`.
+- `seamless-agents` (from `agents`): heading 13px, no chrome background, no top divider; the sort button is a 26px box (radius 6, `hover` fill, `cursor_pointer`) and the header has `pl(16)`, `pr(10)`; the collapsed "»" has `cursor_pointer`.
+- `seamless-chrome` (from `workspace-chrome`): header buttons 29px, Settings added before the palette button, the footer renders nothing, backgrounds and footer border removed. Adds `command.svg`; its buttons have `cursor_pointer`.
 - `seamless-pane` (from `pane`): header text 13px, header square background and bottom border removed, the terminal address (`p.terminal`) at the far right.
 
-Theme file `themes/cozy-paper.json`: `background #ffffff`, `foreground #4a4036`, `selection #eadfc8`, `cursor #c2570c`, a warm 16-color `ansi`, and `colors: { chrome: "#f0e7d6", canvas: "#e5d9c4" }`.
+Theme file `themes/cozy-paper.json`: `background #fdfaf4`, `foreground #4a4036`, `selection #eadfc8`, `cursor #c2570c`, a warm 16-color `ansi`, and `colors: { chrome: "#f0e7d6", canvas: "#e5d9c4" }`.
 
 `herdr` functions used: `spaces`, `panes`, `run`, `theme`, `layout`, `props`, `shared`, `setShared`, `settings`, `window`, `updates`, `openOverlay`, `home`. Commands: `app.settings`, `app.palette`, `space.select`, `tab.select`, `layout.show`, `layout.hide`, `layout.select`, `layout.resize`, `pane.focus`, `pane.split`, `pane.zoom`, `pane.close`. No network, no programs run.
 
@@ -65,7 +65,7 @@ Theme file `themes/cozy-paper.json`: `background #ffffff`, `foreground #4a4036`,
 ## Done when
 
 - `herdr-app check` passes for each of the five mods and `herdr-app status` shows `errors: []`.
-- The window has no title bar, no divider lines and no status bar; the sidebar is 268px and cream, the gaps around the cards are sand, the cards are white.
+- The window has no title bar, no divider lines and no status bar; the sidebar is 268px and cream, the gaps around the cards are sand, the cards are off-white (`#fdfaf4`).
 - The sidebar header shows Settings, the command icon and the sidebar toggle; clicking the command icon opens the palette.
 - A space with one tab and that tab active shows one rounded block with no seam.
 - The focused pane has a pink ring and its address is pink; moving focus does not shift any pane.

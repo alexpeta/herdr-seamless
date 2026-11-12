@@ -413,7 +413,8 @@ export default class Agents extends View {
       .when(!collapsed, (el) =>
         el.child(
           h_flex()
-            .px(16)
+            .pl(16)
+            .pr(10)
             .h(41)
             .pt(14)
             .pb(5)
@@ -424,9 +425,16 @@ export default class Agents extends View {
             .child(
               div()
                 .id("ag-sort")
+                .size(26)
+                .flex_none()
+                .flex()
+                .items_center()
+                .justify_center()
+                .rounded(6)
+                .cursor_pointer()
                 .text_size(11)
                 .text_color(t.dim)
-                .hover((s) => s.text_color(t.foreground))
+                .hover((s) => s.bg(t.hover).text_color(t.foreground))
                 .on_click(() => openOverlay({ mod: "seamless-agents", kind: "popup", width: 200, height: 140, props: { sortMenu: true } }))
                 .tooltip(`Sort agents: ${sort.label}`)
                 .child(svg(`mods/workspace-chrome/${sort.icon}.svg`).size(14)),
@@ -448,6 +456,7 @@ export default class Agents extends View {
                 .id("collapse")
                 .text_size(13)
                 .text_color(t.dim)
+                .cursor_pointer()
                 .hover((s) => s.text_color(t.foreground))
                 .on_click(toggleSidebar)
                 .child("»"),
