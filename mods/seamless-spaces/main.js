@@ -404,6 +404,22 @@ export default class Spaces extends View {
       .when(g.behind > 0, (el) => el.child(div().flex_none().text_color(t.ansi1).child(`\u2193${g.behind}`)));
   }
 
+  // Hover fill that fades: a layer behind the row's content whose opacity is transitioned
+  // (a background colour itself can't be). Row id lives in this.hov; the row's on_hover sets it.
+  fade(id, t, radius, off) {
+    return div().absolute().inset_0().rounded(radius).bg(t.hover)
+      .opacity(this.hov === id && !off ? 1 : 0)
+      .transition("opacity", { duration: 160, easing: "ease-out" });
+  }
+
+  hoverTrack(id) {
+    return (hovered, cx) => {
+      if (hovered) this.hov = id;
+      else if (this.hov === id) this.hov = null;
+      cx.notify();
+    };
+  }
+
   // A space's tabs as a subtree under its row, drawn like the Agents list's child rows:
   // an elbow connector per tab, the active tab of the shown space raised.
   tabRows(w, t, tree) {
@@ -427,11 +443,12 @@ export default class Spaces extends View {
         .text_size(13)
         .when(on, (el) => el.bg(t.selected))
         .cursor_pointer()
-        .hover((s) => s.bg(t.hover))
+        .on_hover(this.hoverTrack(c.id))
         .on_click(() => {
           if (!w.active) run("space.select", { id: w.id });
           run("tab.select", { id: c.id });
         })
+        .child(this.fade(c.id, t, 8, on))
         .child(div().absolute().left(x).top(0).w(12).h(13).border_l(1.5).border_b(1.5).border_color(t.input).rounded_bl(6))
         .when(!last, (el) => el.child(div().absolute().left(x).top(13).bottom(0).border_l(1.5).border_color(t.input)))
         .child(div().flex_1().min_w(0).truncate().text_color(on ? t.foreground : t.muted).child(c.zoomed ? `${name} Z` : name))
@@ -458,7 +475,8 @@ export default class Spaces extends View {
       .when(on && w.tabs?.[0]?.active, (el) => el.rounded_bl(0).rounded_br(0))
       .when(on, (el) => el.bg(t.selected))
       .cursor_pointer()
-      .when(!on, (el) => el.hover((s) => s.bg(t.hover)))
+      .on_hover(this.hoverTrack(w.id))
+      .child(this.fade(w.id, t, 8, on))
       .when(this.pressed === w.id && this.over !== w.id, (el) => el.opacity(0.5))
       .when(this.pressed !== null && this.over === w.id && this.pressed !== w.id, (el) => el.child(
         div().absolute().left(0).right(0).h(2).bg(t.accent)

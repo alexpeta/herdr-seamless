@@ -21,7 +21,7 @@ A borderless, cozy layout for [Herdr](https://herdr.dev). It starts from the def
 - **Tabs under each space.** Spaces list their tabs as a tree with elbow connectors. Clicking a tab selects its space, then the tab, and shows its status (spinner or dot). Each tab row shows the first terminal address, with "+N" when there are more.
 - **One block when it's alone.** When a space's first tab is the active one, the space row and the tab row share one color and squared touching corners, so a space with one tab reads as a single rounded block.
 - **Header buttons.** Settings (gear), Command palette (opens `app.palette`) and the sidebar toggle sit in the header. The search button and the Settings and Add machine rows at the bottom are gone, so the footer is empty. An update-ready dot moves to the gear.
-- **Button polish.** The Agents sort button now has a hover fill like the other icon buttons, and the sidebar header buttons, the Spaces "+" and the space and tab rows show a hand cursor.
+- **Button polish.** The Agents sort button now has a hover fill like the other icon buttons, and the sidebar header buttons, the Spaces "+" and the space and tab rows show a hand cursor. Space and tab rows fade their hover fill in and out (160 ms) instead of snapping.
 
 ### Tabs
 
