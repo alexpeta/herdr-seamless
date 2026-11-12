@@ -114,7 +114,7 @@
                   "lone": true,
                   "border": {
                     "width": 3,
-                    "color": "#00000018"
+                    "color": "#00000000"
                   },
                   "focus": {
                     "width": 3,
@@ -164,8 +164,7 @@
                 }
               ]
             }
-          ],
-          "background": "canvas"
+          ]
         }
       ],
       "background": "chrome"

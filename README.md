@@ -1,6 +1,6 @@
 # Seamless
 
-A borderless, cozy layout for [Herdr](https://herdr.dev). It starts from the default `main` layout and removes the lines, the title bar and the status bar, so the sidebar, tab strip and panes sit on soft cream and sand surfaces with rounded pane cards.
+A borderless, cozy layout for [Herdr](https://herdr.dev). It starts from the default `main` layout and removes the lines, the title bar and the status bar, so the sidebar, tab strip and panes sit on soft cream surfaces with rounded pane cards.
 
 ![Seamless](preview.png)
 
@@ -10,9 +10,9 @@ A borderless, cozy layout for [Herdr](https://herdr.dev). It starts from the def
 
 - **No title bar, no dividers.** Every divider and pane border in the default layout is gone, including the lines under the tab strip, above the Agents list and above the sidebar footer.
 - **No status bar.** The bottom bar is removed.
-- **Rounded pane cards.** Panes are cards with a 16px radius on a sand background, with an 8px gap between them. A faint dark 3px border (`#00000018`) gives each card a soft edge and keeps panes from shifting when focus moves. The gaps are the sand `canvas` color, darker than the cream bars, so the cards stand out. There is no real drop shadow: Herdr only draws one around the whole pane group, not under each card.
+- **Rounded pane cards.** Panes are cards with a 16px radius on the same cream as the bars, with an 8px gap between them. A transparent 3px border keeps panes from shifting when focus moves. The cards are flat: there is no drop shadow, because Herdr only draws one around the whole pane group, not under each card.
 - **Pink focus ring.** The focused pane gets a 3px pink (`#ff4fa3`) ring.
-- **Cozy light theme.** A bundled `cozy-paper` theme: cream sidebar and bars (`#f0e7d6`), sand gaps (`#e5d9c4`), warm off-white pane cards (`#fdfaf4`), warm terminal colors. Dark mode uses the shipped `graphite` theme, unchanged.
+- **Cozy light theme.** A bundled `cozy-paper` theme: cream sidebar and bars (`#f0e7d6`), warm off-white pane cards (`#fdfaf4`), warm terminal colors. Dark mode uses the shipped `graphite` theme, unchanged.
 - **Square-fill fix.** `terminal_opacity: 0` stops the terminal's square fill poking out past the rounded card corners.
 - **One text size.** Sidebar headings, tab pills, pane headers and panel buttons are all 13px.
 
